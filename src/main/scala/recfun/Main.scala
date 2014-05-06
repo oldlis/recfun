@@ -34,7 +34,22 @@ object Main {
   /**
    * Exercise 2
    */
-  def balance(chars: List[Char]): Boolean = ???
+  def balance(chars: List[Char]): Boolean = {
+    def rbalance(openedBrackets: Int, chars: List[Char]): Boolean = {
+      if (openedBrackets < 0) return false
+      if (chars.isEmpty) {
+        return if (openedBrackets == 0) true else false
+      }
+
+      chars.head match {
+        case '(' => rbalance(openedBrackets + 1, chars.tail)
+        case ')' => rbalance(openedBrackets - 1, chars.tail)
+        case _ => rbalance(openedBrackets, chars.tail)
+      }
+    }
+
+    rbalance(0, chars);
+  }
 
   /**
    * Exercise 3
