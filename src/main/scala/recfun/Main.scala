@@ -1,5 +1,7 @@
 package recfun
 
+import scala.annotation.tailrec
+
 object Main {
   def main(args: Array[String]) {
     println(pascal(350, 400))
@@ -54,5 +56,13 @@ object Main {
   /**
    * Exercise 3
    */
-  def countChange(money: Int, coins: List[Int]): Int = ???
+  def countChange(money: Int, coins: List[Int]): Int = {
+    val sortedCoins = coins.sortWith(_ < _);
+
+    if (money == 0) 1
+    else if (money < 0 || sortedCoins.isEmpty) 0
+    else {
+      countChange(money, sortedCoins.tail) + countChange(money - sortedCoins.head, sortedCoins)
+    }
+  }
 }
