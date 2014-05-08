@@ -57,12 +57,17 @@ object Main {
    * Exercise 3
    */
   def countChange(money: Int, coins: List[Int]): Int = {
-    val sortedCoins = coins.sortWith(_ < _);
+    def rcountChange(money: Int, coins: List[Int]): Int = {
+      if (money == 0) 1
+      else if (money < 0 || coins.isEmpty) 0
+      else {
+        rcountChange(money, coins.tail) + rcountChange(money - coins.head, coins)
+      }
+    }
 
-    if (money == 0) 1
-    else if (money < 0 || sortedCoins.isEmpty) 0
+    if (money == 0 || coins.isEmpty) 0
     else {
-      countChange(money, sortedCoins.tail) + countChange(money - sortedCoins.head, sortedCoins)
+      rcountChange(money, coins.sortWith(_ < _))
     }
   }
 }
